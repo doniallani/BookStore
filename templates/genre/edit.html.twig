@@ -1,0 +1,13 @@
+{% extends 'genre/index.html.twig' %}
+
+{% block title %}Edit Genre{% endblock %}
+
+{% block page %}
+    <h1>Edit Genre</h1>
+
+    {{ include('genre/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('genre_index') }}">back to list</a>
+
+    {{ include('genre/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,95 @@
+<div id="quickview-add">
+		    <!-- Modal -->
+		    <div class="modal fade" id="productadd" tabindex="-1" role="dialog">
+		        <div class="modal-dialog modal__container" role="document">
+		            <div class="modal-content">
+		                <div class="modal-header modal__header">
+		                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                </div>
+		                <div class="modal-body">
+		                    <div class="modal-product">
+		                        <!-- Start product images -->
+		                        <div class="product-images">
+		                            <div class="main-image images">
+		                                <img alt="big images" src="{{ asset ('images/logo/logo.png')}}">
+		                            </div>
+		                        </div>
+		                        <!-- end product images -->
+		                        <div class="product-info">
+                                     <h1>Edit Book</h1>
+                                     
+ <form action="/book/mod/{{book.id}}" class="my_form" method="post" role="form">
+
+ <div class="form-group">
+  <label class="col-form-label">Book name</label>
+  <input type="text" value="{{book.name}}" name="name" class="form-control" placeholder="Book Name">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Book Author</label>
+  <input type="text" value="{{book.author}}" name="author" class="form-control" placeholder="Book Author">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Publishing house</label>
+  <input type="text" value="{{book.maisonEdition}}" name="maisonEdi" class="form-control" placeholder="Publishing House">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Publishing Date</label>
+  <input type="date" value="{{book.dateEdition}}" name="dateEdi" class="form-control" placeholder="Publishing Date">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Number of pages</label>
+  <input type="text" name="nb"  value="{{book.nombrePage}}" class="form-control" placeholder="Number of pages">
+</div>
+<div class="form-group">
+  <label class="col-form-label">Price</label>
+  <input type="text" value="{{book.price}}" name="price" class="form-control" placeholder="Price">
+</div>
+{% if app.user %}
+ <input type="hidden" name="user" value="{{app.user.id}}">
+{% endif  %} 
+                               <label>
+                                      Book categorie
+                                    </label>
+                                    <select onchange="getCritere()" id="selectTypeCritere" name="genre" class="form-control" required>
+
+                                        <option value="0">
+                                            ------
+                                        </option>
+                                        {% for t in type %}
+                                            <option id="{{t.id}}" value="{{t.id}}">{{t.label}}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                    <div id="critere"></div>
+
+ <div class="form-group">
+      <label>Book state</label>
+      <select name="etat" class="form-control">
+       <option value="0"> ------ </option>
+        <option value="new">new</option>
+        <option value="used">used</option>
+      </select>
+    </div>
+
+     <div class="form-group">
+      <label >Action</label>
+      <select name="action" class="form-control">
+      <option value="0"> ------ </option>
+        <option value="Sell">Sell</option>
+        <option value="Rent">Rent</option>
+      
+      </select>
+    </div>
+
+                                <button class="btn btn-primary" type="submit">Submit
+                                </button>
+                                <button class="btn btn-default" type="reset">Reset
+                                </button>
+                            
+                        </form>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>

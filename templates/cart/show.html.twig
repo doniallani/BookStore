@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+<div class="ht__bradcaump__area bg-image--5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bradcaump__inner text-center">
+                        	<h2 class="bradcaump-title">Cart</h2>
+                            <nav class="bradcaump-content">
+                              <a class="breadcrumb_item" href="/">Home</a>
+                              <span class="brd-separetor">/</span>
+                              <a class="breadcrumb_item active" href="/cart/user/{{app.user.id}}">Cart</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div class="cart-main-area section-padding--lg bg--white">
+            <div class="container">
+                <div class="row">
+                {% if books %}
+                    <div class="col-md-12 col-sm-12 ol-lg-12">
+                        <form action="#">               
+                            <div class="table-content wnro__table table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr class="title-top">
+                                            <th class="product-thumbnail">Book Image</th>
+                                            <th class="product-name">Book name</th>
+                                            <th class="product-price">Price</th>
+                                            <th class="product-remove">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                        <tr>
+                                         {% set price = 0 %}
+                                         
+                                           {% for i in 0.. books|length -1 %} 
+                                           <td class="product-thumbnail">
+                                         
+		        					
+                        
+						   <a href="/book/{{ books[i].0.id }}">	  <img style='height:100px; width:80px' src="{{ asset('/uploads/' ~  books[i].0.img)}}" alt="{{books[i].0.name}}">
+                     
+                       
+                       </a></td>
+                       
+                                         
+                                            <td class="product-name"><a href="/book/{{ books[i].0.id }}">{{ books[i].0.name }}</a></td>
+                                            
+                                           {% set price = price + books[i].0.price|number_format  %}
+                                            <td class="product-subtotal">{{ books[i].0.price  }}  TND</td>
+                                            <td class="product-remove">
+                                                {% for cart in carts %}
+                                                {% if books[i].0.id == cart.book %}
+                                                {{ include('cart/_delete_form.html.twig') }}
+                                                {% endif %}
+                                                {% endfor %}
+                                                </a></td>
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                       
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form> 
+                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-6">
+                        <div class="cartbox__total__area">
+                           
+                            <div class="cart__total__amount">
+                                <span>Grand Total</span>
+                                <span>{{price  }} TND </span>
+                            </div>
+                        </div>
+                                         {% else %}
+                                        <h4> cart is empty </h4>
+                                        {% endif %}
+                    </div>
+   
+                </div>
+            </div>  
+        </div>
+
+
+
+
+    
+
+    
+
+    
+
+   
+{% endblock %}

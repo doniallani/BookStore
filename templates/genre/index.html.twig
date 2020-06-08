@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gategories {% endblock %}
+
+{% block body %}
+  <div class="ht__bradcaump__area bg-image--5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bradcaump__inner text-center">
+                        	<h2 class="bradcaump-title">Gategories</h2>
+                            <nav class="bradcaump-content">
+                              <a class="breadcrumb_item" href="/">Home</a>
+                              <span class="brd-separetor">/</span>
+                              <a class="breadcrumb_item active" href="/genre">Categories</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+      {% block  page %}
+    <h1>Gategories</h1>
+    {% set role = '' %}
+    {% if app.user %} 
+    {% for it in app.user.roles %} 
+    {% set role = it %}
+    {% endfor %}
+    {% endif %}
+    
+    
+   {% if role == "ROLE_ADMIN" %} 
+<a  class="btnAdd" style="margin-bottom:30px;" href="{{ path('genre_new') }}">Create new Genre</a> 
+ <a class="btnAdd" style="margin-bottom:30px;" href="{{ path('subject_new') }}">Create new Subject</a>
+{% endif %}
+
+<div class="row">   
+{% for genre in genres %}
+<div class="col-md-4">
+<div class="card text-white cat mb-3" style="max-width: 20rem;">
+  <h4 class="card-header"> <a style="color:white;" href="{{ path('genre_show', {'id': genre.id}) }}"> {{genre.id}}. {{ genre.label}} </a>
+   
+    
+   {% if role == "ROLE_ADMIN" %} 
+  <div style="text-align: right; display:align;" >
+  <a class="btnSec" href="{{ path('genre_edit', {'id': genre.id}) }}">edit </div></a>
+  {% endif %}
+  
+  </h4>
+  <div class="card-body">
+{% for sub in subject %}
+{% if genre.id == sub.genre  %}
+ <p class="card-text"> <a style="color:white;" href="/subject/{{sub.id}}"> {{ sub.label }} </a></p>
+  {% endif %}
+  {% else %}
+  no subjects
+{% endfor %} 
+ 
+  </div>
+</div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}
+</div>
+   
+{% endblock %}

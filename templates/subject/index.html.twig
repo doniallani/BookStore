@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Subject index{% endblock %}
+
+{% block body %}
+ <div class="ht__bradcaump__area bg-image--5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bradcaump__inner text-center">
+                        	<h2 class="bradcaump-title">SUBJECTS</h2>
+                            <nav class="bradcaump-content">
+                              <a class="breadcrumb_item" href="/">Home</a>
+                              <span class="brd-separetor">/</span>
+                              <a class="breadcrumb_item active" href="/subject">Subject</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    	<div class="container">
+             {% set role = '' %}
+    {% if app.user %} 
+    {% for it in app.user.roles %} 
+    {% set role = it %}
+    {% endfor %}
+    {% endif %}
+             {% block page %}
+
+    <h1>Subject index</h1>
+    {% if role == "ROLE_ADMIN" %}
+    <a href="{{ path('subject_new') }}">Create new</a>
+    {% endif %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Genre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.id }}</td>
+                <td>{{ subject.label }}</td>
+                <td>{{ subject.Genre }}</td>
+                <td>
+                    <a href="{{ path('subject_show', {'id': subject.id}) }}">show</a>
+                    <a href="{{ path('subject_edit', {'id': subject.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
+</div>
+
+{% endblock %}

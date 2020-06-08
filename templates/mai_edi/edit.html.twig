@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit MaiEdi{% endblock %}
+
+{% block body %}
+    <h1>Edit MaiEdi</h1>
+
+    {{ include('mai_edi/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('mai_edi_index') }}">back to list</a>
+
+    {{ include('mai_edi/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'book/index.html.twig' %}
+
+{% block title %}New Book{% endblock %}
+{% block search %} {% endblock %}
+{% block book %}
+<!-- adding a new book-->
+    <h1>Create new Book</h1>
+ <form action="/book/add" class="my_form" method="post" role="form"> <!--the form will be proccessed by  ajax file "annonceForm" -->
+
+ <div class="form-group">
+  <label class="col-form-label">Book name</label>
+  <input type="text" name="name" class="form-control" placeholder="Book Name">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Book Author</label>
+  <input type="text" name="author" class="form-control" placeholder="Book Author">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Publishing house</label>
+  <input type="text" name="maisonEdi" class="form-control" placeholder="Publishing House">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Publishing Date</label>
+  <input type="date" name="dateEdi" class="form-control" placeholder="Publishing Date">
+</div>
+ <div class="form-group">
+  <label class="col-form-label">Number of pages</label>
+  <input type="text" name="nb" class="form-control" placeholder="Number of pages">
+</div>
+<div class="form-group">
+  <label class="col-form-label">Price</label>
+  <input type="text" name="price" class="form-control" placeholder="Price">
+</div>
+ <input type="hidden" name="user" value="{{app.user.id}}">
+                               <label>
+                                      Book categorie
+                                    </label> <!-- once the genre is selected the critere.js file will display the correct subjects for reach genre-->
+                                    <select onchange="getCritere()" id="selectTypeCritere" name="genre" class="form-control" required>
+
+                                        <option value="0">
+                                            ------
+                                        </option>
+                                        {% for t in type %}
+                                            <option id="{{t.id}}" value="{{t.id}}">{{t.label}}</option>
+
+                                        {% endfor %}
+                                    </select>
+                                    <div id="critere"></div>
+
+                                    <div class="form-group">
+                                          <label>Book state</label>
+                                          <select name="etat" class="form-control">
+                                          <option value="0"> ------ </option>
+                                            <option value="new">new</option>
+                                            <option value="used">used</option>
+                                          </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label >Action</label>
+                                          <select name="action" class="form-control">
+                                          <option value="0"> ------ </option>
+                                            <option value="Sell">Sell</option>
+                                            <option value="Rent">Rent</option>
+                                          
+                                          </select>
+                                        </div>
+
+                                <button class="btnAdding" type="submit">Submit
+                                </button>
+                                <button class="btnSecond" type="reset">Reset
+                                </button>
+                            
+                        </form>
+
+  
+
+    
+
+    
+{% endblock %}

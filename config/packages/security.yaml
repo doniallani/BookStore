@@ -1,0 +1,51 @@
+security:
+  
+
+
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\Admin
+                property: email
+        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload user from session & other features (e.g. switch_user)
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            form_login:
+                check_path: login
+                login_path: login
+            guard:
+                authenticators:
+                  - App\Security\LoginAdminAuthenticator
+            logout:
+                path: app_logout
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+       
+        - { path: ^/genre/edit, roles: ROLE_ADMIN }
+        - { path: ^/genre/new, roles: ROLE_ADMIN }
+        - { path: ^/subject/edit, roles: ROLE_ADMIN }
+        - { path: ^/subject/new, roles: ROLE_ADMIN }
+        - { path: ^/book/cart, roles: ROLE_USER }
+        - { path: ^/book/new, roles: [ROLE_USER, ROLE_ADMIN] }
+        
+        #- { path: ^/profile, roles: ROLE_USER }
+    encoders:
+        App\Entity\Admin:
+         algorithm: bcrypt
+         cost: 12

@@ -1,0 +1,91 @@
+<!--ignore this file, just saved code here for me-->
+<div class="row">
+<div class="col-md-6">
+<div class="jumbotron">
+    <table class="table">
+    
+    <h1> {{ book.name }} </h2>
+        <tbody>
+           
+           
+            <tr>
+                <th>Author</th>
+                <td>{{ book.author }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ book.genre }}</td>
+            </tr>
+            <tr>
+                <th>Date Edition</th>
+                <td>{{ book.dateEdition ? book.dateEdition|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Maison Edition</th>
+                <td>{{ book.maisonEdition }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ book.etat }}</td>
+            </tr>
+            <tr>
+                <th>NombrePage</th>
+                <td>{{ book.nombrePage }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+    <div style="text-align: center;"> <button type="button" class="btn btn-outline-info"> {{ book.action }} </button> </div>
+    </div>
+    <div style=" margin-top:30px; margin-buttom:30px;">  {{ include('book/_delete_form.html.twig') }}<a href="{{ path('book_edit', {'id': book.id}) }}"class="btn btn-warning">Edit</a>
+   
+    </div>
+    </div>
+    <div class="col-md-6" style="margin-top: auto; margin-bottom:auto;">
+    
+     {% if img %}
+
+                       
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+   
+      {% for im in img %}
+       <div class="carousel-item active">
+      <img style="height:50%" src="{{ asset('/uploads/' ~ im.donne)}}" class="d-block w-100" alt="...">
+      </div>
+      {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+                    {% endif %}
+         <div style=" margin-top:30px; margin-bottom:30px;">
+        <form  method="POST" action="/up.php" enctype="multipart/form-data" target="iframe">
+        <input type="hidden" name="size" value="10000000">
+
+
+        <input type="button" id="add_more"  class=" btn btn-primary upload" value="Add Files"/>
+
+        <input type="hidden" value="{{book.id}}" name="id">
+
+
+        <div>
+            <button class="btn btn-primary"  type="submit" name="upload" id="upload">save image</button>
+        </div>
+    </form>
+    <iframe name="iframe" style="display:none" ></iframe>
+
+    
+ 
+
+ </div>
+    </div>
+    </div>

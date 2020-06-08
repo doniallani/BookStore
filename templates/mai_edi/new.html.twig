@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MaiEdi{% endblock %}
+
+{% block body %}
+    <h1>Create new MaiEdi</h1>
+
+    {{ include('mai_edi/_form.html.twig') }}
+
+    <a href="{{ path('mai_edi_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'genre/index.html.twig' %}
+
+{% block title %}Genre{% endblock %}
+
+{% block page %}
+    <h1> {{genre.label}}</h1>
+     {% set role = '' %}
+    {% if app.user %} 
+    {% for it in app.user.roles %} 
+    {% set role = it %}
+    {% endfor %}
+    {% endif %}
+
+{% if books %}
+     <div class="cart-main-area section-padding--lg bg--white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ol-lg-12">
+                        <form action="#">               
+                            <div class="table-content wnro__table table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr class="title-top">
+                                        
+                                            <th class="product-thumbnail">Book Image</th>
+                                            <th class="product-name">Book name</th>
+                                            <th class="product-price">Price</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                           
+                                        <tr>
+                                        
+                          {% for book in books %} 
+                           <td class="product-thumbnail">  
+                           
+                           		
+                          
+						   <a href="/book/{{ book.id }}"><img style='height:100px; width:80px' src="{{ asset('/uploads/' ~ book.img)}}" alt="{{book.name}}">
+                     
+                         </a></td>                
+                                            <td class="product-name"><a href="/book/{{ book.id }}">{{ book.name }}</a></td>
+                                            
+                                           
+                                            <td class="product-subtotal">{{ book.price  }}  TND</td>
+                                           
+                                        </tr>
+                                       
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form> 
+                       
+                    </div>
+                </div>
+                </div>
+                </div>
+     {% else %}   
+     <h3> no books </h3>
+     {% endif %}      
+
+      {% if role == "ROLE_ADMIN" %}
+    <a href="{{ path('genre_edit', {'id': genre.id}) }}">edit</a>
+
+    {{ include('genre/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Orde{% endblock %}
+
+{% block body %}
+    <h1>Create new Orde</h1>
+
+    {{ include('orde/_form.html.twig') }}
+
+    <a href="{{ path('orde_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    <h1>New User</h1>
+
+      <form action="/admin/add" class="my_form" method="post" role="form">
+                                <div class="form-group">
+                                    <label></label>
+                                    <input class="form-control" name="email" placeholder="email" required type="email">
+
+
+                                </div>
+
+
+                                
+
+                               
+                                <div class="form-group">
+
+                                    <input class="form-control" name="password" placeholder="password" required type="password">
+
+
+                                </div>
+
+                                <select class="form-control" name="role">
+                                    <option value="ROLE_ADMIN">
+                                        admin
+                                    </option>
+                                    <option value="ROLE_USER">
+                                        user
+                                    </option>
+
+                                </select>
+
+
+                                <button class="btn btn-primary" type="submit">Submit
+                                </button>
+                                <button class="btn btn-default" type="reset">Reset
+                                </button>
+                            </div>
+                        </form>
+    <a href="{{ path('admin_index') }}">back to list</a>
+{% endblock %}

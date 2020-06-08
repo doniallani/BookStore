@@ -1,0 +1,348 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book{% endblock %}
+
+{% block body %}
+{% set link = 0 %}
+ {% for c in cat %}
+					  {% if c.label == book.genre %}
+					  {% set link = c.id %}
+					  {% endif %}
+	{% endfor %}	
+
+	  {% set role = '' %}
+    {% if app.user %} 
+    {% for it in app.user.roles %} 
+    {% set role = it %}
+    {% endfor %}
+    {% endif %}
+
+<div class="ht__bradcaump__area bg-image--5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="bradcaump__inner text-center">
+                        	<h2 class="bradcaump-title">Books</h2>
+                            <nav class="bradcaump-content">
+                              <a class="breadcrumb_item" href="/">Home</a>
+                              <span class="brd-separetor">/</span>
+                              <a class="breadcrumb_item active" href="/book">Book</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ <div class="maincontent bg--white pt--80 pb--55">
+        	<div class="container">
+        		<div class="row">
+        			<div class="col-lg-9 col-12">
+        				<div class="wn__single__product">
+        					<div class="row">
+        						<div class="col-lg-6 col-12">
+        							<div class="wn__fotorama__wrapper">
+	        							<div class="fotorama wn__fotorama__action" data-nav="thumbs">
+                                            
+      
+      
+      <img src="{{ asset('/uploads/' ~ book.img)}}" class="fotorama__img" style="width: 223.009px; height: 280px; left: 98.4956px; top: 0px;">
+      
+		        							 
+	        							</div>
+        							</div>
+        						</div>
+        						<div class="col-lg-6 col-12">
+        							<div class="product__info__main">
+        								<h1> {{ book.name }} </h1>
+        								<div class="product-reviews-summary d-flex">
+        									<ul class="rating-summary d-flex">
+                                                 {% for i in 0.. book.rate -1 %}
+                                                        <li><i class="zmdi zmdi-star-outline"></i></li>
+                                                        {% endfor %}
+    											
+        									</ul>
+        								</div>
+        								<div class="price-box">
+        									<span>{{book.price}} TND</span>
+        								</div>
+										<div class="product__overview">
+        									<p> Author: {{book.author}}.</p>
+        									<p> Maison Edition :{{book.maisonEdition}} </p>
+        								</div>
+        								<div class="box-tocart d-flex">
+        									
+        									<div class="addtocart__actions">
+                                                {% if app.user %}
+												{% if (app.user.id == book.user) or (role == "ROLE_ADMIN") %}
+												{{ include('book/_delete_form.html.twig') }}
+												{% else %}
+                                                 <form action="/book/cart" class="my_form" method="post" role="form">  
+                                                 <input type="hidden" value={{book.id}} name="book">
+                                                 
+                                                 <input type="hidden" value={{app.user.id}} name="user">
+                                                
+                                                <button  class="tocart" type="submit" title="Add to Cart">Add to Cart</button>
+                                                </form>
+												{% endif %}
+                                                {% else %}
+                                                <a  href="{{ path('book_cart') }}"class="tocart" type="submit" title="Add to Cart">Add to Cart</a>
+                                                 {% endif %}
+        									</div>
+											<div class="product-addto-links clearfix">
+												{% if app.user %}
+												{% if (app.user.id == book.user) or (role == "ROLE_ADMIN")  %}
+												
+												<button data-toggle="modal" title="Edit" style="margin-bottom:10px"class=" btnSecond" href="#productadd"> Edit Book</button>
+											<form  method="POST" action="/up.php" enctype="multipart/form-data" target="iframe">
+        <input type="hidden" name="size" value="10000000">
+
+
+        <input type="button" id="add_more"  class=" btnSecond" value="Edit image"/>
+
+        <input type="hidden" value="{{book.id}}" name="id">
+
+
+        <div>
+            <button class="btnSecond"  type="submit" name="upload" id="upload">save image</button>
+        </div>
+    </form> 
+    <iframe name="iframe" style="display:none" ></iframe> 
+
+												{% endif %}
+												{% endif %}
+											</div>
+        								</div>
+										<div class="product_meta">
+											<span class="posted_in">Categories: 
+				 
+												<a href="/genre/{{link}}">{{ book.genre }}</a>
+											</span>
+										</div>
+										<div class="product-share">
+											<ul>
+												<li class="categories-title">Share :</li>
+												<li>
+													<a href="#">
+														<i class="icon-social-twitter icons"></i>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<i class="icon-social-tumblr icons"></i>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<i class="icon-social-facebook icons"></i>
+													</a>
+												</li>
+												<li>
+													<a href="#">
+														<i class="icon-social-linkedin icons"></i>
+													</a>
+												</li>
+											</ul>
+										</div>
+        							</div>
+        						</div>
+        					</div>
+        				</div>
+        				<div class="product__info__detailed">
+							<div class="pro_details_nav nav justify-content-start" role="tablist">
+	                            <a class="nav-item nav-link active" data-toggle="tab" href="#nav-details" role="tab">Details</a>
+	                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-review" role="tab">Reviews</a>
+	                        </div>
+	                        <div class="tab__container">
+	                        	<!-- Start Single Tab Content -->
+	                        	<div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
+									<div class="description__attribute">
+										<p>Subject: {{ book.subject}}</p>
+										<ul>
+											<li>• Publishing date: {{ book.dateEdition ? book.dateEdition|date('Y-m-d') : '' }}</li>
+											<li>• Condition: {{ book.etat }} </li>
+											<li>• Page Numbers: {{ book.nombrePage }} </li>
+										</ul>
+									</div>
+	                        	</div>
+	                        	<!-- End Single Tab Content -->
+                                <!-- Start Single Tab Content -->
+                              
+	                        	<div class="pro__tab_label tab-pane fade" id="nav-review" role="tabpanel">
+									<div class="review__attribute">
+                                        <h1>Book Reviews</h1>
+                                        {% for rev in review %}
+										
+										 {% if app.user %}
+												{% if (app.user.id == book.user) or (role == "ROLE_ADMIN") %}
+												{{ include('review/_delete_form.html.twig') }}
+												{% endif %}
+												{% endif %}
+												<h2>{{rev.rateNick}}</h2>
+										<div class="review__ratings__type d-flex">
+											<div class="review-ratings">
+												<div class="rating-summary d-flex">
+													<span>Rate</span>
+			    									<ul class="rating d-flex">
+                                                        {% for i in 0.. rev.rate -1 %}
+                                                        <li><i class="zmdi zmdi-star"></i></li>
+                                                        {% endfor %}
+													
+			    									</ul>
+												</div>
+
+												
+												
+											</div>
+											<div class="review-content">
+												<p>{{rev.rateNick}}</p>
+												<p>{{rev.rateSumm}}</p>
+												<p>{{rev.rateRev}}</p>
+                                            </div>
+                                           
+                                        </div>
+                                         {% endfor %}
+                                    </div>
+                                    
+									<div class="review-fieldset">
+										<h2>You're reviewing:</h2>
+                                        <h3>{{book.name}}</h3>
+                                        <form action="/book/review" class="my_form" method="post" role="form">  
+										<div class="review-field-ratings">
+											<div class="product-review-table">
+												<div class="review-field-rating d-flex">
+                                                    
+													<span>Rate</span>
+													<div class="rate">
+                                                        <input type="radio" id="star5" name="rate" value="5" onclick="myfunction5()" />
+                                                        <label for="star5" title="text">5 stars</label>
+                                                        <input type="radio" id="star4" name="rate" value="4" onclick="myfunction4()"  />
+                                                        <label for="star4" title="text">4 stars</label>
+                                                        <input type="radio" id="star3" name="rate" value="3" onclick="myfunction3()"  />
+                                                        <label for="star3" title="text">3 stars</label>
+                                                        <input type="radio" id="star2" name="rate" value="2" onclick="myfunction2()"  />
+                                                        <label for="star2" title="text">2 stars</label>
+                                                        <input type="radio" id="star1" name="rate" value="1" onclick="myfunction1()"  />
+                                                        <label for="star1" title="text">1 star</label>
+                                                    </div>
+												</div>
+												
+											</div>
+										</div>
+										<div class="review_form_field">
+                                          
+											<div class="input__box">
+												<span>Nickname</span>
+												<input id="nickname_field" type="text" name="nickname">
+											</div>
+											<div class="input__box">
+												<span>Summary</span>
+												<input id="summery_field" type="text" name="summery">
+											</div>
+											<div class="input__box">
+												<span>Review</span>
+												<textarea  name="review"></textarea>
+                                            </div>
+                                            <input type="hidden" name="book" value="{{book.id}}">
+                                            <input type="hidden" name="rating" id="rating" value="0">
+											<div class="review-form-actions">
+												<button type="submit">Submit Review</button>
+                                            </div>
+                                            </form>
+										</div>
+									</div>
+	                        	</div>
+	                        	<!-- End Single Tab Content -->
+	                        </div>
+                        </div>
+                        </div>
+                        
+
+             
+        			<div class="col-lg-3 col-12 md-mt-40 sm-mt-40">
+        				<div class="shop__sidebar">
+        					<aside class="wedget__categories poroduct--cat">
+        						<h3 class="wedget__title">Book Categories</h3>
+        						<ul>
+								
+        					 {% for c in cat %}
+                      <li><a href="/genre/{{c.id}}"> {{c.label}} <span>{{c.NumBook}}</span></a></li>
+                      {% endfor  %}
+        						</ul>
+        					</aside>
+        					<aside class="wedget__categories pro--range">
+        						<h3 class="wedget__title">Filter by price</h3>
+        						<div class="content-shopby">
+        						    <div class="price_filter s-filter clear">
+        						        <form action="#" method="GET">
+        						            <div id="slider-range"></div>
+        						            <div class="slider__range--output">
+        						                <div class="price__output--wrap">
+        						                    <div class="price--output">
+        						                        <span>Price :</span><input type="text" id="amount" readonly="">
+        						                    </div>
+        						                    <div class="price--filter">
+        						                        <a href="#">Filter</a>
+        						                    </div>
+        						                </div>
+        						            </div>
+        						        </form>
+        						    </div>
+        						</div>
+        					</aside>
+        					<aside class="wedget__categories poroduct--tag">
+        						<h3 class="wedget__title">Book Tags</h3>
+        						<ul>
+                      {% for c in cat %}
+					  {% if c.label == book.genre %}
+					  {% set link = c.id %}
+					  {% endif %}
+                      <li><a href="href="/genre/{{c.id}}""> {{c.label}}</a></li>
+                      {% endfor  %}
+        						</ul>
+        					</aside>
+        					
+        				</div>
+              </div>
+
+
+   
+</div>
+</div>
+</div>
+</div>
+
+{% block javascripts %}
+  <script>
+        function validate(){
+          var spare= document.getElementById('star5');
+          if (spare.checked){
+            alert("checked") ;
+          }else{
+            alert("You didn't check.")
+          }
+        }
+
+function myfunction5() {
+    document.getElementById('rating').value= 5;
+}
+function myfunction4() {
+    document.getElementById('rating').value= 4;
+}
+function myfunction3() {
+    document.getElementById('rating').value= 3;
+}
+function myfunction2() {
+    document.getElementById('rating').value= 2;
+}
+function myfunction1() {
+    document.getElementById('rating').value= 1;
+}
+
+     </script>
+    {% endblock %}
+	 {{ include('book/popup.html.twig') }}
+{% endblock %}
+
